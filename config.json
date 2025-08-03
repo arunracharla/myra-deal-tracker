@@ -1,0 +1,22 @@
+{
+  "products": [
+    {
+      "name": "stylish remote control fan",
+      "min_price": 3000,
+      "max_price": 5000,
+      "sites": ["Amazon", "Flipkart", "Myntra"]
+    },
+    {
+      "name": "men's leather watch",
+      "min_price": 2000,
+      "max_price": 4000,
+      "sites": ["Myntra", "Flipkart"]
+    },
+    {
+      "name": "women's designer handbag",
+      "min_price": 2500,
+      "max_price": 4500,
+      "sites": ["Amazon", "Ajio"]
+    }
+  ]
+}
