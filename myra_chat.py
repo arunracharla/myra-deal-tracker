@@ -1,23 +1,28 @@
-def greet_user():
-    print("👋 Hey there! I'm Myra, your AI shopping bestie.")
-    print("Tell me what you’re looking for, and I’ll hunt it down for you like a deal detective 🕵️‍♀️")
+from fastapi import FastAPI, Request
+from pydantic import BaseModel
+import json
+import uuid
 
-def get_user_preferences():
-    # Not used directly since Streamlit takes input, but we keep it for CLI fallback or future bots.
-    print("Let’s set up your wishlist:")
+app = FastAPI()  # <-- THIS is the important part
 
-    product = input("🔍 What product are you looking for? ")
-    min_price = int(input("💸 Minimum price (₹): "))
-    max_price = int(input("💰 Maximum price (₹): "))
-    sites = input("🛒 Preferred sites (comma-separated: Amazon, Flipkart): ").split(',')
-    category = input("📦 Category (Electronics, Home, Fashion): ")
-    phone_number = input("📱 Your WhatsApp number (+91 format): ")
+# Sample schema
+class ProductRequest(BaseModel):
+    product_name: str
+    min_price: int
+    max_price: int
+    specs: str
+    sites: list
 
-    return {
-        "product": product.strip(),
-        "min_price": min_price,
-        "max_price": max_price,
-        "sites": [site.strip() for site in sites],
-        "category": category.strip(),
-        "phone": phone_number.strip()
-    }
+@app.get("/")
+def root():
+    return {"message": "Myra is up and running 🚀"}
+
+@app.post("/track")
+def track_product(data: ProductRequest):
+    request_id = str(uuid.uuid4())
+
+    # You could save this request to a queue or config.json or DB here
+    with open("requests_log.json", "a") as f:
+        f.write(json.dumps({"id": request_id, **data.dict()}, indent=2) + ",\n")
+
+    return {"status": "success", "request_id": request_id}
