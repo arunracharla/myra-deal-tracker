@@ -2,3 +2,9 @@ Flask
 requests
 beautifulsoup4
 lxml
+fastapi
+uvicorn
+httpx
+beautifulsoup4
+requests
+twilio
